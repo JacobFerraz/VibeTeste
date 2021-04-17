@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{A7D2EABE-A52F-4546-8E11-D3D07738CAFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{AC5CE084-D0DB-4E51-93E4-E81F9FA624BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeTest.API", "src\services\VibeTest.API\VibeTest.API.csproj", "{08A9A018-B5D5-404E-BD42-84C3CC10D253}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4F5D591C-DB0F-41D2-88BE-62CFC892DB1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeTest.Domain", "src\services\VibeTest.Domain\VibeTest.Domain.csproj", "{45A27854-71F1-4683-8528-156EA4495D33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeTest.Core", "src\building\VibeTest.Core\VibeTest.Core.csproj", "{853A4D9B-EE29-487B-8EEA-AE48C54058D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeTest.Infra", "src\services\VibeTest.Infra\VibeTest.Infra.csproj", "{C1C2A4D3-F380-4DEC-A18E-DF88C66BE867}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08A9A018-B5D5-404E-BD42-84C3CC10D253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08A9A018-B5D5-404E-BD42-84C3CC10D253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08A9A018-B5D5-404E-BD42-84C3CC10D253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08A9A018-B5D5-404E-BD42-84C3CC10D253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45A27854-71F1-4683-8528-156EA4495D33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45A27854-71F1-4683-8528-156EA4495D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45A27854-71F1-4683-8528-156EA4495D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45A27854-71F1-4683-8528-156EA4495D33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{853A4D9B-EE29-487B-8EEA-AE48C54058D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{853A4D9B-EE29-487B-8EEA-AE48C54058D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{853A4D9B-EE29-487B-8EEA-AE48C54058D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{853A4D9B-EE29-487B-8EEA-AE48C54058D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1C2A4D3-F380-4DEC-A18E-DF88C66BE867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1C2A4D3-F380-4DEC-A18E-DF88C66BE867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1C2A4D3-F380-4DEC-A18E-DF88C66BE867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1C2A4D3-F380-4DEC-A18E-DF88C66BE867}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{08A9A018-B5D5-404E-BD42-84C3CC10D253} = {A7D2EABE-A52F-4546-8E11-D3D07738CAFA}
+		{45A27854-71F1-4683-8528-156EA4495D33} = {A7D2EABE-A52F-4546-8E11-D3D07738CAFA}
+		{853A4D9B-EE29-487B-8EEA-AE48C54058D5} = {4F5D591C-DB0F-41D2-88BE-62CFC892DB1E}
+		{C1C2A4D3-F380-4DEC-A18E-DF88C66BE867} = {A7D2EABE-A52F-4546-8E11-D3D07738CAFA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70309D1F-AB2B-4A8D-A8EB-DF2E01900541}
+	EndGlobalSection
+EndGlobal
