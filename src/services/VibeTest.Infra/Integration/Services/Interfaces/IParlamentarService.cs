@@ -7,7 +7,7 @@ using VibeTest.Domain.Models;
 
 namespace VibeTest.Infra.Integration.Services.Interfaces
 {
-    public interface IParlamentarService : IService<Parlamentar>
+    public interface IParlamentarService : IService<Parlamentar, ParlamentarFilter>
     {
         Task<ParlamentarDespesas> BuscarDespesasUltimosDoisMeses(int id);
     }

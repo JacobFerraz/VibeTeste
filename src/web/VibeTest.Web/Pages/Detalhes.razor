@@ -1,0 +1,99 @@
+﻿@inject HttpClient Http
+@using System.Net.Http.Json
+<MudDialog>
+    <DialogContent >
+        @if (parlamentar == null || parlamentar.Detalhes == null)
+        {
+        <MudContainer Fixed="true" class="d-flex justify-center align-center">
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        </MudContainer>
+        }
+        else
+        {
+    <MudContainer Style="max-height: 500px; overflow-y: scroll">
+        <MudContainer class="mb-4 d-flex flex-row">
+            <MudAvatar  Image=@parlamentar.Detalhes.Foto Style="height:80px; width:80px;" class="mr-2" />
+            <MudContainer class="d-flex flex-column">
+                <MudText class="mb-2"><b Class="mr-2">@parlamentar.Nome (@parlamentar.Partido - @parlamentar.Uf)</b><MudChip Color="Color.Primary">Visualizações</MudChip></MudText>
+                <MudText>@parlamentar.Email</MudText>
+            </MudContainer>
+        </MudContainer>
+        <MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" class="mb-4">
+            <MudTabPanel Text="Sexo">
+                <MudText>@DefinirSexo(@parlamentar.Detalhes.Sexo)</MudText>
+            </MudTabPanel>
+            <MudTabPanel Text="Nascimento">
+                <MudText >@parlamentar.Detalhes.DataDeNascimento.ToString("dd/MM/yyyy")</MudText>
+            </MudTabPanel>
+            <MudTabPanel Text="Escolaridade">
+                <MudText>@parlamentar.Detalhes.Escolaridade</MudText>
+            </MudTabPanel>
+            <MudTabPanel Text="Redes sociais">
+                @foreach (var redeSocial in parlamentar.Detalhes.RedesSociais)
+                {
+                     <MudText >
+                         <MudLink Href=@redeSocial Typo="Typo.body2">@redeSocial</MudLink>
+                      </MudText>
+                }
+            </MudTabPanel>
+        </MudTabs>
+        <MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+            @foreach (var despesas in parlamentarDespesas.DespesasMes)
+            {
+                <MudTabPanel Text=@($"Despesas: {despesas.Mes}/{despesas.Ano}")>
+                    <MudText>
+                        <b>Valor total das despesas: </b> @($"R$: {@despesas.TotalDespesasMes}")
+                    </MudText>
+                    <MudTable TotalItems=2 Items="despesas.DespesasUnitarias" RowsPerPage=2>
+                        <HeaderContent>
+                            <MudTh>Tipo despesa</MudTh>
+                            <MudTh>Data despesa</MudTh>
+                            <MudTh>Nome Fornecedor</MudTh>
+                            <MudTh>Tipo Documento</MudTh>
+                            <MudTh>Valor líquido</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Tipo Despesa">@context.TipoDespesa</MudTd>
+                            <MudTd DataLabel="Data Despesa">@context.DataDespesa.ToString("dd/MM/yyyy")</MudTd>
+                            <MudTd DataLabel="Nome Fornecedor">@context.NomeDoFornecedor</MudTd>
+                            <MudTd DataLabel="Tipo Documento">@context.TipoDocumento</MudTd>
+                            <MudTd DataLabel="Valor Líquido">@context.ValorLiquido</MudTd>
+                        </RowTemplate >
+                        <PagerContent >
+                            <MudTablePager />
+                        </PagerContent >
+                    </MudTable>
+                </MudTabPanel>
+            }
+        </MudTabs>
+    </MudContainer>
+        }
+    </DialogContent>
+    <DialogActions>
+    </DialogActions>
+</MudDialog>
+@code {
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public int parlamentarId { get; set; } = 0;
+
+    private ParlamentarViewModel parlamentar;
+    private ParlamentarDespesasViewModel parlamentarDespesas;
+
+    protected override async Task OnInitializedAsync()
+    {
+        parlamentar = await Http.GetFromJsonAsync<ParlamentarViewModel>($"https://localhost:44303/api/parlamentar/BuscarParlamentar{parlamentarId}");
+        await this.BuscarDespesasParlamentar(parlamentarId);
+    }
+
+    protected async Task BuscarDespesasParlamentar(int parlamentarId)
+    {
+        parlamentarDespesas = await Http.GetFromJsonAsync<ParlamentarDespesasViewModel>($"https://localhost:44303/api/parlamentar/BuscarDespesasUltimosDoisMeses{parlamentarId}");
+    }
+
+    protected string DefinirSexo(string sexo)
+    {
+        return parlamentar.Detalhes.Sexo == "M" ? "Masculino" : "Feminino";
+    }
+
+    }

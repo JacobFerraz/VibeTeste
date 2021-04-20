@@ -1,0 +1,101 @@
+﻿@page "/"
+@inject HttpClient Http
+@inject IDialogService Dialog
+@using System.Net.Http.Json
+
+@if (parlamentars == null)
+{
+<MudContainer Fixed="true" class="d-flex justify-center align-center">
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+</MudContainer>
+}
+else
+{
+<MudTable Items="@parlamentars" @bind-SelectedItem="selectedItem" RowsPerPage=5 Class="mt-8 mb-8">
+    <ColGroup>
+        <col style="width: 30%;" />
+        <col style="width: 10%;" />
+        <col style="width: 10%;" />
+        <col style="width: 40%;" />
+        <col style="width: 10%;" />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh>Nome</MudTh>
+        <MudTh>Partido</MudTh>
+        <MudTh>UF</MudTh>
+        <MudTh>Email</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nome">@context.Nome</MudTd>
+        <MudTd DataLabel="Partido">@context.Partido</MudTd>
+        <MudTd DataLabel="UF">@context.Uf</MudTd>
+        <MudTd DataLabel="Email">@context.Email</MudTd>
+        <MudTd DataLabel="">
+            <MudButton Variant="Variant.Filled" OnClick="@((e) => OpenDialog(context.Nome,context.Id,closeButton))" DisableElevation="true" Color="Color.Primary">Detalhes </MudButton>
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+    <MudContainer Class="d-flex p-2 justify-center align-center">
+        <MudFab Color=Color.Primary OnClick="@((e) =>AtualizarListaParlamentares("anterior"))"
+                Icon="@Icons.Material.Filled.NavigateBefore" Size="Size.Small" IconSize="Size.Small" Class="mr-4" />
+        <MudFab Color="Color.Primary" OnClick="@((e) =>AtualizarListaParlamentares("proximo"))"
+                Icon="@Icons.Material.Filled.NavigateNext" Size="Size.Small" IconSize="Size.Small" />
+    </MudContainer>
+    <MudContainer Class="d-flex p-2 justify-end align-center">
+        <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Search" OnClick="@((e) => OpenSearchDialog())" Size="Size.Large" IconSize="Size.Medium" Class="ma-2" />
+    </MudContainer>
+}
+
+@code {
+    public ParlamentarViewModel[] parlamentars;
+    private ParlamentarFiltroViewModel filtro = new ParlamentarFiltroViewModel();
+    private ParlamentarViewModel selectedItem = null;
+    private string primary = $"color: {Colors.Cyan.Lighten1}";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await this.AtualizarParlamentares();
+    }
+
+    protected async Task AtualizarParlamentares()
+    {
+        string requestUrl = $"https://localhost:44303/api/parlamentar/BuscarTodosParlamentares{filtro.Pagina}?nome={filtro.Nome}&partido={filtro.Partido}&uf={filtro.Uf}";
+        parlamentars = await Http.GetFromJsonAsync<ParlamentarViewModel[]>(requestUrl);
+    }
+
+    DialogOptions closeButton = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
+
+    private void OpenDialog(string nomeParlamentar, int parlamentarId, DialogOptions options)
+    {
+        var parameters = new DialogParameters { ["parlamentarId"] = parlamentarId };
+        Dialog.Show<Detalhes>(nomeParlamentar, parameters, options);
+    }
+
+    private async Task OpenSearchDialog()
+    {
+        DialogOptions closeButton = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
+        await Dialog.Show<Busca>("Filtrar", closeButton) .Result.ContinueWith((filtro) => {
+            this.filtro = (ParlamentarFiltroViewModel)filtro.Result.Data;
+
+        });
+
+        await this.AtualizarParlamentares();
+
+    }
+
+    private async Task AtualizarListaParlamentares(string index)
+    {
+        if (index.Equals("proximo"))
+        {
+            this.filtro.Pagina++;
+        }
+        else if (this.filtro.Pagina > 1)
+        {
+            this.filtro.Pagina--;
+        }
+
+        await this.AtualizarParlamentares();
+    }
+
+}

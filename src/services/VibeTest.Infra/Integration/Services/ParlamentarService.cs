@@ -34,18 +34,18 @@ namespace VibeTest.Infra.Integration.Services
             _parlamentarDespesasAdapter = parlamentarDespesasAdapter;
         }
 
-        public async Task<Parlamentar> BuscarPorId(int id)
+        public async Task<Parlamentar> BuscarPorId(ParlamentarFilter filtro)
         {
             var response = await _httpClient.GetFromJsonAsync<ParlamentarDetalhesResponse>
-                ($"{_integrationModel.RequestUrl}/deputados/{id}");
+                ($"{_integrationModel.RequestUrl}/deputados/{filtro.Id}");
 
             return (_parlamentarDetalhesAdapter.AdaptarParlamentarDetalhesResponse(response.Dados));
 
         }
-        public async Task<IEnumerable<Parlamentar>> BuscarTodos(int pagina)
+        public async Task<IEnumerable<Parlamentar>> BuscarTodos(ParlamentarFilter filtro)
         {
            var response = await _httpClient.GetFromJsonAsync<ParlamentarResponse>
-                ($"{_integrationModel.RequestUrl}/deputados/?pagina={pagina}&itens=5");
+                ($"{_integrationModel.RequestUrl}/deputados/?pagina={filtro.Pagina}&itens=5&nome={filtro.Nome}&siglaUf={filtro.Uf}&siglaPartido={filtro.Partido}");
 
             var parlamentares = _parlamentarAdapter.AdaptarListaParlamentarResponse(response.Dados);
             return this.OrdenaEmOrdemAlfabetica(parlamentares);           
@@ -60,6 +60,7 @@ namespace VibeTest.Infra.Integration.Services
                 ($"{_integrationModel.RequestUrl}/deputados/{id}/despesas?ano={anoAtual}&mes={mesAnterior}&mes={mesRetrasado}");
 
            var despesas = _parlamentarDespesasAdapter.AdaptarListaParlamentarDespesasResponse(response.Dados);
+           if(despesas != null)
            this.CalcularDespesas(despesas);
 
            return despesas;

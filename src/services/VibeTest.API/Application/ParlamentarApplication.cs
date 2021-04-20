@@ -17,19 +17,25 @@ namespace VibeTest.API.Application
             _parlamentarService = parlamentarService;
         }
 
-        public async Task<Parlamentar> BuscarPorId(int id)
+        public async Task<Parlamentar> BuscarPorId(ParlamentarFilter filtro)
         {
-            return await _parlamentarService.BuscarPorId(id);
+            return await _parlamentarService.BuscarPorId(filtro);
         }
 
-        public async Task<IEnumerable<Parlamentar>> BuscarTodos(int pagina)
+        
+        public async Task<IEnumerable<Parlamentar>> BuscarTodos(ParlamentarFilter filtro)
         {
-            return await _parlamentarService.BuscarTodos(pagina);
+            return await _parlamentarService.BuscarTodos(filtro);
         }
 
         public async Task<ParlamentarDespesas> BuscarDespesasUltimosDoisMeses(int id)
         {
             return await _parlamentarService.BuscarDespesasUltimosDoisMeses(id);
+        }
+
+        public ParlamentarFilter MontarFiltroParlamentar(int pagina = 0, string nome = "", string partido = "", string uf = "", int id = 0)
+        {
+            return new ParlamentarFilter(pagina, nome, partido,uf, id);
         }
 
         public void Dispose()

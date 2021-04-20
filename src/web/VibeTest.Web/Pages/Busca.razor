@@ -1,0 +1,31 @@
+﻿@inject HttpClient Http
+@using System.Net.Http.Json
+
+<MudDialog>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField @bind-Value="filtro.Nome" Label="Nome" Variant="Variant.Outlined"></MudTextField>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField @bind-Value="filtro.Partido" Label="Partido" Variant="Variant.Outlined"></MudTextField>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField @bind-Value="filtro.Uf" Label="UF" Variant="Variant.Outlined"></MudTextField>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled"OnClick="@((e) =>Submit())" Color="Color.Primary">Filtrar</MudButton>
+    </DialogActions>
+</MudDialog> 
+
+@code{
+    private ParlamentarFiltroViewModel filtro = new ParlamentarFiltroViewModel(pagina: 1);
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    protected async Task Submit()
+    {
+        MudDialog.Close(DialogResult.Ok<ParlamentarFiltroViewModel>(filtro));
+    }
+}

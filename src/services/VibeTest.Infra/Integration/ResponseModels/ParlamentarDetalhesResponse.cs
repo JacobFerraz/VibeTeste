@@ -19,7 +19,7 @@ namespace VibeTest.Infra.Integration.ResponseModels
         public string Sexo { get; set; }
         public object UrlWebsite { get; set; }
         public List<string> RedeSocial { get; set; }
-        public DateTime DataNascimento { get; set; }
+        public string DataNascimento { get; set; }
         public object DataFalecimento { get; set; }
         public string UfNascimento { get; set; }
         public string MunicipioNascimento { get; set; }

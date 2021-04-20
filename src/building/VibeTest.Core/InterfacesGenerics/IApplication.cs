@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace VibeTest.Core.InterfacesGenerics
 {
-    public interface IApplication<T> : IDisposable where T : IAggregateRoot
+    public interface IApplication<T,U> : IDisposable where T : IAggregateRoot where U : IFilterAggregate
     {
-        Task<IEnumerable<T>> BuscarTodos(int pagina);
-        Task<T> BuscarPorId(int id);
+        Task<IEnumerable<T>> BuscarTodos(U parameter);
+        Task<T> BuscarPorId(U parameter);
     }
 }

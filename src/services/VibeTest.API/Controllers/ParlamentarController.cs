@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using VibeTest.API.Application.Interfaces;
 using VibeTest.Core.Services;
-using VibeTest.Domain.Models;
 
 namespace VibeTest.API.Controllers
 {
@@ -20,9 +16,10 @@ namespace VibeTest.API.Controllers
         }
 
         [HttpGet("BuscarTodosParlamentares{pagina}")]
-        public async Task<IActionResult> BuscarTodosParlamentares(int pagina)
+        public async Task<IActionResult> BuscarTodosParlamentares(int pagina,string nome, string partido, string uf)
         {
-            var result = await _parlamentarApplication.BuscarTodos(pagina);
+            var filtro = _parlamentarApplication.MontarFiltroParlamentar(pagina,nome,partido,uf);
+            var result = await _parlamentarApplication.BuscarTodos(filtro);
 
             if(result == null)
             {
@@ -36,7 +33,8 @@ namespace VibeTest.API.Controllers
         [HttpGet("BuscarParlamentar{id}")]
         public async Task<IActionResult> BuscarParlamentar(int id)
         {
-            var result = await _parlamentarApplication.BuscarPorId(id);
+            var filtro = _parlamentarApplication.MontarFiltroParlamentar(id: id);
+            var result = await _parlamentarApplication.BuscarPorId(filtro);
 
             if (result == null)
             {
@@ -60,5 +58,6 @@ namespace VibeTest.API.Controllers
 
             return CustomResponse(result);
         }
+
     }
 }

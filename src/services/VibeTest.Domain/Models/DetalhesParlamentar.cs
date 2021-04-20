@@ -13,13 +13,13 @@ namespace VibeTest.Domain.Models
         public string Escolaridade { get; set; }
         public IEnumerable<string> RedesSociais { get; set; }
 
-        public DetalhesParlamentar(string nomeCivil, string foto, string sexo, DateTime dataDeNascimento,
+        public DetalhesParlamentar(string nomeCivil, string foto, string sexo, string dataDeNascimento,
             string escolaridade, IEnumerable<string> redesSociais)
         {
             NomeCivil = nomeCivil;
             Foto = foto;
             Sexo = sexo;
-            DataDeNascimento = dataDeNascimento;
+            DataDeNascimento = Convert.ToDateTime(dataDeNascimento);
             Escolaridade = escolaridade;
             RedesSociais = redesSociais;
         }
