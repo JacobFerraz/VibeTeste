@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime;
 
-<MudThemeProvider Theme="_currentTheme"/>
+<MudThemeProvider Theme="_currentTheme" />
 <MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.ExtraSmall" />
 <MudSnackbarProvider />
 
@@ -12,6 +13,9 @@
         <MudAppBarSpacer />
 
         <MudAppBarSpacer />
+        <MudTooltip Text="Toggle right-to-left/left-to-right">
+            <MudIconButton Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Inherit" OnClick="@((e) => OpenLinkedin("https://www.linkedin.com/in/jacob-ferraz-349a00202/"))"/>
+        </MudTooltip>
         <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
             <MudTooltip Text="Toggle light/dark theme">
                 <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => DarkMode())" />
@@ -79,6 +83,11 @@
     {
         _currentTheme = _defaultTheme;
 
+    }
+
+    protected async Task OpenLinkedin(string url)
+    {
+        await JSRuntime.InvokeAsync<string>("open", url , "_blank");
     }
 
     #region Theme

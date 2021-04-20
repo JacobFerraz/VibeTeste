@@ -43,6 +43,11 @@
         @if (parlamentarDespesas != null)
         {
             <MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+                <MudTabPanel Text="Despesas Total Ultimos dois Meses">
+                    <MudText>
+                        <b>Valor total das despesas: </b> @($"R$: {parlamentarDespesas.TotalDespesas}")
+                    </MudText>
+                </MudTabPanel>
                 @foreach (var despesas in parlamentarDespesas.DespesasMes)
                 {
                     <MudTabPanel Text=@($"Despesas: {(despesas.Mes < 9 ? "0" + despesas.Mes : despesas.Mes)}/{despesas.Ano}")>
