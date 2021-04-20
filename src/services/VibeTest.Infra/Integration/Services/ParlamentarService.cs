@@ -53,11 +53,8 @@ namespace VibeTest.Infra.Integration.Services
 
         public async Task<ParlamentarDespesas> BuscarDespesasUltimosDoisMeses(int id)
         {
-            var anoAtual = DateTime.Now.Year-1;
-            var mesAnterior = DateTime.Now.AddMonths(-4).Month;
-            var mesRetrasado = DateTime.Now.AddMonths(-5).Month;
             var response = await _httpClient.GetFromJsonAsync<ParlamentarDespesasResponse>
-                ($"{_integrationModel.RequestUrl}/deputados/{id}/despesas?ano={anoAtual}&mes={mesAnterior}&mes={mesRetrasado}");
+                ($"{_integrationModel.RequestUrl}/deputados/{id}/despesas?itens=100&ordem=desc&ordenarPor=ano");
 
            var despesas = _parlamentarDespesasAdapter.AdaptarListaParlamentarDespesasResponse(response.Dados);
            if(despesas != null)

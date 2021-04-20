@@ -5,27 +5,53 @@
     <DialogContent>
         <MudGrid>
             <MudItem xs="12" sm="6" md="4">
-                <MudTextField @bind-Value="filtro.Nome" Label="Nome" Variant="Variant.Outlined"></MudTextField>
+                <MudTextField @bind-Value="filtroBusca.Nome" Label="Nome" Variant="Variant.Outlined"></MudTextField>
             </MudItem>
             <MudItem xs="12" sm="6" md="4">
-                <MudTextField @bind-Value="filtro.Partido" Label="Partido" Variant="Variant.Outlined"></MudTextField>
+                <MudTextField @bind-Value="filtroBusca.Partido" Label="Partido" Variant="Variant.Outlined"></MudTextField>
             </MudItem>
             <MudItem xs="12" sm="6" md="4">
-                <MudTextField @bind-Value="filtro.Uf" Label="UF" Variant="Variant.Outlined"></MudTextField>
+                <MudTextField @bind-Value="filtroBusca.Uf" Label="UF" Variant="Variant.Outlined"></MudTextField>
             </MudItem>
         </MudGrid>
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Filled"OnClick="@((e) =>Submit())" Color="Color.Primary">Filtrar</MudButton>
+        <MudButton OnClick="Cancel">Cancelar</MudButton>
+        <MudButton OnClick="Clear">Limpar</MudButton>
+        <MudButton Variant="Variant.Filled" OnClick="@((e) => Submit())" Color="Color.Primary">Filtrar</MudButton>
     </DialogActions>
 </MudDialog> 
 
 @code{
-    private ParlamentarFiltroViewModel filtro = new ParlamentarFiltroViewModel(pagina: 1);
+    [Parameter] public ParlamentarFiltroViewModel filtro { get; set; }
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-    protected async Task Submit()
+    private ParlamentarFiltroViewModel filtroBusca { get; set; }
+
+    protected override void OnInitialized()
     {
-        MudDialog.Close(DialogResult.Ok<ParlamentarFiltroViewModel>(filtro));
+        this.filtroBusca = new ParlamentarFiltroViewModel(nome: filtro.Nome, partido: filtro.Partido, uf: filtro.Uf, pagina: 1);
     }
+
+    protected void ResponseFiltro(FiltroStatus status)
+    {
+        switch (status)
+        {
+            case FiltroStatus.Submit:
+                MudDialog.Close(DialogResult.Ok<ParlamentarFiltroViewModel>(filtroBusca));
+                break;
+            case FiltroStatus.Clear:
+                MudDialog.Close(DialogResult.Ok<ParlamentarFiltroViewModel>(new ParlamentarFiltroViewModel(pagina: 1)));
+                break;
+            case FiltroStatus.Cancel:
+                MudDialog.Close(DialogResult.Ok<ParlamentarFiltroViewModel>(filtro));
+                break;
+            default:
+                break;
+        }
+    }
+
+    protected void Cancel() => ResponseFiltro(FiltroStatus.Cancel);
+    protected void Submit() => ResponseFiltro(FiltroStatus.Submit);
+    protected void Clear() => ResponseFiltro(FiltroStatus.Clear);
 }

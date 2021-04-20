@@ -16,10 +16,10 @@ namespace VibeTest.Domain.Models
         public ParlamentarDespesasUnitarias(string tipoDocumento, string tipoDespesa, string dataDespesa, 
             string nomeDoFornecedor, decimal valorLiquido)
         {
-            TipoDocumento = tipoDocumento;
-            TipoDespesa = tipoDespesa;
-            DataDespesa = Convert.ToDateTime(dataDespesa);
-            NomeDoFornecedor = nomeDoFornecedor;
+            TipoDocumento = tipoDocumento != null ? tipoDocumento : string.Empty;
+            TipoDespesa = tipoDespesa != null ? tipoDespesa : string.Empty;
+            DataDespesa = dataDespesa != null ? Convert.ToDateTime(dataDespesa) : DateTime.MinValue;
+            NomeDoFornecedor = nomeDoFornecedor != null? nomeDoFornecedor : string.Empty;
             ValorLiquido = valorLiquido;
         }
 

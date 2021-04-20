@@ -16,7 +16,7 @@ namespace VibeTest.Core.Services
             {
                 return Ok(result);
             }
-            return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
+            return NotFound(new ValidationProblemDetails(new Dictionary<string, string[]>
             {
                 {"Mensagens" , Erros.ToArray() }
             }));

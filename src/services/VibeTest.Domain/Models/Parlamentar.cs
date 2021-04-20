@@ -12,10 +12,10 @@ namespace VibeTest.Domain.Models
         public Parlamentar(int id, string nome, string partido, string uf, string email)
         {
             Id = id;
-            Nome = nome;
-            Partido = partido;
-            Uf = uf;
-            Email = email;
+            Nome = nome != null? nome : string.Empty;
+            Partido = partido != null? partido : string.Empty;
+            Uf = uf != null? uf : string.Empty;
+            Email = email != null? email : string.Empty;
         }
         public string Nome { get; private set; }
         public string Partido { get; private set; }

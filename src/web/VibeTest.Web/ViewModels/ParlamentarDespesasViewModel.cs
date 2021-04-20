@@ -9,6 +9,8 @@ namespace VibeTest.Web.ViewModels
     {
         public decimal TotalDespesas { get; set; }
         public ICollection<ParlamentarDespesasMesViewModel> DespesasMes { get; set; }
+
+        public int Status { get; set; }
     }
 
 }
