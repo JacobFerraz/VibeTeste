@@ -21,7 +21,7 @@ Boas práticas de desenvolvimento:
 - [`MVVM`]
 
 Ferramentas necessárias para executar:
-- [`Node LTS`]()
+- [`Node JS`](https://nodejs.org/en/)
 - [`Visual Studio 2019`](https://visualstudio.microsoft.com/pt-br/)
 
 <b>Observação sobre o item 3.1.3 - Totalização das despesas</b>
