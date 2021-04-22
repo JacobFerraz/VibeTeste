@@ -32,7 +32,7 @@ Ferramentas necessárias para executar:
 Como executar o projeto:
 ```bash
 # Instalar ASP.NET e Desenvolvimento Web no Visual Studio 2019
-# Instalar Desenvolvimento em NodeJS
+# Instalar Desenvolvimento em NodeJS no Visual Studio 2019
 
 # Repositórios para clone
 - https://dev.azure.com/JacobFerraz/_git/VibeTeste
