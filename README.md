@@ -17,6 +17,7 @@ Boas práticas de desenvolvimento:
 - [`Generics`]
 - [`Clean Code`]
 - [`Layered Architecture`]
+- [`Adapter Pattern`]
 - [`Aggregate Pattern`]
 - [`MVVM`]
 
